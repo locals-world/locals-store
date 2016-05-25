@@ -57,15 +57,7 @@ Example:
     </style>
     <iron-pages selected="{{state}}" class="total">
       <section>
-        <iron-selector selected="{{selection}}" on-iron-select="choose" attr-for-selected="object">
-          <locals-button object="localsavatar"></locals-button>
-          <locals-button object="localsgroup"></locals-button>
-          <locals-button object="localspet"></locals-button>
-          <locals-button object="localsresidence"></locals-button>
-          <locals-button object="localspartner"></locals-button>
-          <locals-button object="localschild"></locals-button>
-          <locals-button object="localscar"></locals-button>
-        </iron-selector>
+          <locals-button object="localscommunity" on-tap="choose"></locals-button>
       </section>
       <section>
         <div id="rendercanvas"></div>
@@ -80,11 +72,12 @@ Example:
       is: 'locals-store',
 
       properties: {
-      
+           
       },
 
       ready: function(){
         this.state = 0;
+        this.selection = null;
       },
 
       choose: function(e){
@@ -98,6 +91,21 @@ Example:
 
       confirm: function(){
         console.log('add ', this.selection, ' to userobject');
+        var lsapi = document.getElementById("lsapi");
+        console.log(lsapi.data.collection);
+        lsapi.data.collection['localscommunity'] = {
+            "component": {
+              "name": "locals-community",
+              "contract": "0x000"
+            },
+            "data":{
+              "name":"My Club",
+              },
+            "config":
+              [[0,0],[0,0],[0,0],[0,"5"],[0,0],[0,0],[0,0],[0,0],[0,0]]
+            }
+        lsapi.writeData(); 
+
       }
 
     });
