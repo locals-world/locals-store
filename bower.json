@@ -19,7 +19,7 @@
   ],
   "dependencies": {
     "polymer": "Polymer/polymer#^1.2.0",
-    "locals-button": "https://github.com/locals-world/locals-button.git#^0.0.5"
+    "locals-button": "https://github.com/locals-world/locals-button.git#^0.0.6"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#^1.0.0"

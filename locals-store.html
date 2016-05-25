@@ -10,8 +10,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../iron-pages/iron-pages.html">
 <link rel="import" href="../locals-button/locals-button.html">
 <link rel="import" href="../locals-style/locals-style.html">
+<link rel="import" href="../locals-confirm/locals-confirm.html">
 
 <!--
 An element providing a solution to no problem in particular.
@@ -53,19 +55,16 @@ Example:
       }
 
     </style>
-    <div class="total">
-        <locals-button object="addavatar"></locals-button>
-        <locals-button object="addpet"></locals-button>
-        <locals-button object="addavatar"></locals-button>
-        <locals-button object="addpet"></locals-button>
-        <locals-button object="addavatar"></locals-button>
-        <locals-button object="addpet"></locals-button>
-        <locals-button object="addavatar"></locals-button>
-        <locals-button object="addpet"></locals-button>
-
-    </div>
-
-
+    <iron-pages selected="{{state}}" class="total">
+      <section>
+          <locals-button object="localscommunity" on-tap="choose"></locals-button>
+      </section>
+      <section>
+        <div id="rendercanvas"></div>
+        <locals-confirm on-cancel="cancel" on-confirm="confirm">Add <span>{{selection}}</span>?</locals-confirm>
+      </section>
+      <section></section>
+    </iron-pages>
   </template>
 
   <script>
@@ -73,8 +72,41 @@ Example:
       is: 'locals-store',
 
       properties: {
-      
+           
       },
+
+      ready: function(){
+        this.state = 0;
+        this.selection = null;
+      },
+
+      choose: function(e){
+        this.state = 1;
+        console.log('add avatar', this.selection);
+      },
+
+      cancel: function(){
+        this.state = 0;
+      },
+
+      confirm: function(){
+        console.log('add ', this.selection, ' to userobject');
+        var lsapi = document.getElementById("lsapi");
+        console.log(lsapi.data.collection);
+        lsapi.data.collection['localscommunity'] = {
+            "component": {
+              "name": "locals-community",
+              "contract": "0x000"
+            },
+            "data":{
+              "name":"My Club",
+              },
+            "config":
+              [[0,0],[0,0],[0,0],[0,"5"],[0,0],[0,0],[0,0],[0,0],[0,0]]
+            }
+        lsapi.writeData(); 
+
+      }
 
     });
   </script>
