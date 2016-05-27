@@ -38,16 +38,19 @@ Example:
       :host {
         display: block;
         box-sizing: border-box;
+        width: 100vw;
+        height: 100vh;
 
       }
 
 
       .total {
         width: 100vw;
+        height: 100%;
         @apply(--layout-horizontal);
         @apply(--layout-start);
         @apply(--layout-wrap);
-        background-color: var(--locals-blue);
+        background-color: var(--locals-grey1);
       }
 
       locals-button {
@@ -57,7 +60,7 @@ Example:
     </style>
     <iron-pages selected="{{state}}" class="total">
       <section>
-          <locals-button object="localscommunity" on-tap="choose"></locals-button>
+          <locals-button object="addcommunity" on-tap="choose"></locals-button>
       </section>
       <section>
         <div id="rendercanvas"></div>
