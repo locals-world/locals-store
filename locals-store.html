@@ -11,6 +11,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="../iron-flex-layout/iron-flex-layout.html">
 <link rel="import" href="../iron-pages/iron-pages.html">
+<link rel="import" href="../neon-animation/neon-animated-pages.html">
+
 <link rel="import" href="../locals-button/locals-button.html">
 <link rel="import" href="../locals-style/locals-style.html">
 <link rel="import" href="../locals-confirm/locals-confirm.html">
@@ -40,56 +42,107 @@ Example:
         box-sizing: border-box;
         width: 100vw;
         height: 100vh;
-
       }
-
 
       .total {
         width: 100vw;
         height: 100%;
-        @apply(--layout-horizontal);
-        @apply(--layout-start);
-        @apply(--layout-wrap);
+        @apply(--layout-vertical);
         background-color: var(--locals-grey1);
       }
 
-      locals-button {
-        margin: 20px;
+      .topbar {
+        width: 100%;
+        background-color: transparent;
+        height: var(--topbar-height);
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        box-sizing: border-box;
+        padding: 10px 20px 10px 10px;
+        }
+
+      .flex {
+        @apply(--layout-horizontal);
+        @apply(--layout-flex);
       }
 
-    </style>
-    <iron-pages selected="{{state}}" class="total">
-      <section>
-          <locals-button object="addcommunity" on-tap="choose"></locals-button>
-      </section>
-      <section>
-        <div id="rendercanvas"></div>
-        <locals-confirm on-cancel="cancel" on-confirm="confirm">Add <span>{{selection}}</span>?</locals-confirm>
-      </section>
-      <section></section>
-    </iron-pages>
-  </template>
+      .main {
+        width: 100%;
+        box-sizing: border-box;
+        padding: 0px 50px 0px 50px;
+        @apply(--layout-horizontal);
+        @apply(--layout-wrap);        
+      }
 
+      .addbtn {
+        margin: 15px;
+      }
+      .homebtn {
+        transition: all 5s linear;
+      }
+      .exit {
+        -ms-transform: rotate(45deg); /* IE 9 */
+        -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+        transform: rotate(45deg);
+      }
+
+
+    </style>
+
+    <template is="dom-if" if="{{_is(mode,'home')}}">
+      <div class="total">
+        <div class="topbar">
+          <p class="flex" on-tap="change"></p>
+          <locals-button class$="{{btnclass}} homebtn" id="exitbtn" icon="plus" on-tap="toHome"></locals-button>
+        </div>
+        <div class="main">
+        <locals-button class="addbtn" object="addcommunity" on-tap="choose"></locals-button>
+        <locals-button class="addbtn" object="addpet" on-tap="choose"></locals-button>
+        </div>
+      </div>
+    </template>
+
+    <template is="dom-if" if="{{_is(mode,'detail')}}">
+      <div id="rendercanvas"></div>
+      <locals-confirm on-cancel="cancel" on-confirm="confirm">Add <span>{{selection}}</span>?</locals-confirm>
+    </template>
+
+  </template>
   <script>
     Polymer({
       is: 'locals-store',
 
       properties: {
-           
+        sizeview: {
+          type: String,
+          observer: '_sizeview'
+        },
+
+        mode: {
+          type: String,
+          value: "home"
+        },
+
+
       },
 
       ready: function(){
-        this.state = 0;
-        this.selection = null;
+        // this.state = 0;
+        // this.selection = null;
+      },
+
+      attached: function(){
+        console.log('WHATHHHAATATTT');
+        this.btnclass = 'exit';   
       },
 
       choose: function(e){
-        this.state = 1;
+        this.mode = "detail";
         console.log('add avatar', this.selection);
       },
 
       cancel: function(){
-        this.state = 0;
+        this.mode = "home";
       },
 
       confirm: function(){
@@ -109,7 +162,44 @@ Example:
             }
         lsapi.writeData(); 
 
-      }
+      },
+
+      toHome:function(){
+        this.fire('to-home');
+        this.mode = "home";
+      },
+
+
+      _sizeview: function(){
+        switch(this.sizeview) {
+            case 'phone':
+                this.customStyle['--topbar-height'] = '100px';
+                this.updateStyles();
+                break;
+            case 'desktop':
+                this.customStyle['--topbar-height'] = '100px';
+                this.updateStyles();
+                break;
+            case 'xlarge':
+                this.customStyle['--topbar-height'] = '100px';
+                this.updateStyles();
+                break;
+            default:
+            console.log("!!! ** Niks");
+        }
+      },
+
+      _is: function(a, b) {
+        if (b === undefined){
+          b = true;
+        }
+        //console.log(a ,'(',typeof a,') is',b,'(',typeof b,') they are equal for ==',a == b,', they are equal for ===',a === b);
+        return a === b;
+      },
+
+
+
+
 
     });
   </script>
