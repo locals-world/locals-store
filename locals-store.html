@@ -172,19 +172,19 @@ Example:
         console.log('add ', this.selection, ' to userobject');
         var lsapi = document.getElementById("lsapi");
         console.log(lsapi.data.collection);
-        lsapi.data.collection['localscommunity'] = {
+        lsapi.data.collection['locals-residence'] = {
             "component": {
-              "name": "locals-community",
+              "name": "locals-residence",
               "contract": "0x000"
             },
             "data":{
-              "name":"My Club",
+              "name":"My Crib",
               },
             "config":
-              [[0,0],[0,0],[0,0],[0,"5"],[0,0],[0,0],[0,0],[0,0],[0,0]]
+              [[2,0]]
             }
         lsapi.writeData(); 
-
+        this.fire('to-home');
       },
 
       toHome:function(){
