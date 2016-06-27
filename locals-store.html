@@ -85,10 +85,12 @@ Example:
         -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
         transform: rotate(45deg);
       }
+      #rendercanvas{
+        background-color: white;
+      }
 
 
     </style>
-
     <template is="dom-if" if="{{_is(mode,'home')}}">
       <div class="total">
         <div class="topbar">
@@ -96,17 +98,26 @@ Example:
           <locals-button class$="{{btnclass}} homebtn" id="exitbtn" icon="plus" on-tap="toHome"></locals-button>
         </div>
         <div class="main">
-        <locals-button class="addbtn" object="addcommunity" on-tap="choose"></locals-button>
-        <locals-button class="addbtn" object="addpet" on-tap="choose"></locals-button>
+       
+         <template is="dom-repeat" items="{{storelist}}">
+     
+          <locals-button class="addbtn" on-object-pressed="choose" object="{{item.type}}"></locals-button>
+        </template>
+
+         
         </div>
       </div>
+
+
+
     </template>
 
     <template is="dom-if" if="{{_is(mode,'detail')}}">
       <div id="rendercanvas"></div>
+        <locals-objectrender sizeview="{{sizeview}}" key="{{selectedtype}}" renderstate="closed"></locals-objectrender>
       <locals-confirm on-cancel="cancel" on-confirm="confirm">Add <span>{{selection}}</span>?</locals-confirm>
     </template>
-
+ 
   </template>
   <script>
     Polymer({
@@ -129,6 +140,14 @@ Example:
       ready: function(){
         // this.state = 0;
         // this.selection = null;
+
+        // this shoudl be posted in a Smart Contract
+        this.storelist = [{
+          type: 'locals-avatar'
+        }, {
+          type: 'locals-residence'
+        }];
+
       },
 
       attached: function(){
@@ -136,9 +155,13 @@ Example:
         this.btnclass = 'exit';   
       },
 
-      choose: function(e){
+      choose: function(e) {
+        //console.log('add avatar', this.selection);
+        //debugger;
+        this.selectedtype = e.detail;
+      
         this.mode = "detail";
-        console.log('add avatar', this.selection);
+        
       },
 
       cancel: function(){
