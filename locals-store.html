@@ -42,6 +42,11 @@ Example:
         box-sizing: border-box;
         width: 100vw;
         height: 100vh;
+        background-color: white;
+      }
+
+      h1 {
+        @apply(--locals-font-h1);
       }
 
       .total {
@@ -87,6 +92,15 @@ Example:
       }
       #rendercanvas{
         background-color: white;
+        width: 100%;
+        height: 100%;
+        @apply(--layout-vertical);
+        @apply(--layout-center);
+      }
+
+      #rendercanvas h1 {
+        text-align: center;
+        font-size: 28px;
       }
 
 
@@ -113,9 +127,11 @@ Example:
     </template>
 
     <template is="dom-if" if="{{_is(mode,'detail')}}">
-      <div id="rendercanvas"></div>
-        <locals-objectrender sizeview="{{sizeview}}" key="{{selectedtype}}" renderstate="closed"></locals-objectrender>
-      <locals-confirm on-cancel="cancel" on-confirm="confirm">Add <span>{{selection}}</span>?</locals-confirm>
+      <div id="rendercanvas">
+        <locals-objectrender sizeview="{{sizeview}}" key="{{selectedtype}}" renderstate="init"></locals-objectrender>
+        <h1>Add this object?</h1>
+      <locals-confirm on-cancel="cancel" on-confirm="confirm"></locals-confirm>
+      </div>
     </template>
  
   </template>
