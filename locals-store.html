@@ -130,6 +130,7 @@ Example:
       <div id="rendercanvas">
         <locals-objectrender sizeview="{{sizeview}}" key="{{selectedtype}}" renderstate="init"></locals-objectrender>
         <h1>Add this object?</h1>
+        <p>This object will cost you xxx &Delta;</p>
       <locals-confirm on-cancel="cancel" on-confirm="confirm"></locals-confirm>
       </div>
     </template>
@@ -159,9 +160,7 @@ Example:
 
         // this shoudl be posted in a Smart Contract
         this.storelist = [{
-          type: 'locals-avatar'
-        }, {
-          type: 'locals-residence'
+          type: 'locals-club'
         }];
 
       },
@@ -188,13 +187,13 @@ Example:
         console.log('add ', this.selection, ' to userobject');
         var lsapi = document.getElementById("lsapi");
         console.log(lsapi.data.collection);
-        lsapi.data.collection['locals-residence'] = {
+        lsapi.data.collection['locals-club'] = {
             "component": {
-              "name": "locals-residence",
+              "name": "locals-club",
               "contract": "0x000"
             },
             "data":{
-              "name":"My Crib",
+              "name":"Locals Club A2DE4",
               },
             "config":
               [[2,0]]
