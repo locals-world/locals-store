@@ -125,7 +125,7 @@ Example:
 
     <template is="dom-if" if="{{_is(mode,'detail')}}">
       <div id="rendercanvas">
-        <locals-objectrender sizeview="{{sizeview}}" key="{{selectedtype}}" renderstate="init"></locals-objectrender>
+        <locals-objectrender sizeview="{{sizeview}}" path="locals-{{selectedtype}}" key="locals-{{selectedtype}}-new"></locals-objectrender>
         <h1>Add this object?</h1>
         <p>This object will cost you xxx &Delta;</p>
       <locals-confirm on-cancel="cancel" on-confirm="confirm"></locals-confirm>
