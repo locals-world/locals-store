@@ -49,6 +49,10 @@ Example:
         @apply(--locals-font-h1);
       }
 
+      p {
+        @apply(--locals-font-body1);
+      }
+
       .total {
         width: 100vw;
         height: 100%;
@@ -79,9 +83,9 @@ Example:
         @apply(--layout-wrap);        
       }
 
-      .addbtn {
+/*      .addbtn {
         margin: 15px;
-      }
+      }*/
       .homebtn {
         transition: all 5s linear;
       }
@@ -103,6 +107,37 @@ Example:
         font-size: 28px;
       }
 
+      .storeitem {
+        width: 100%;
+        max-width: 250px;
+        min-height: 300px;
+        box-sizing: border-box;
+        padding: 15px;
+        @apply(--layout-vertical);
+        @apply(--layout-center-center);
+      }
+
+      .type {
+        font-size: 22px;
+        width: 100%;
+        text-align: center;
+        margin: 0px 0px 5px 0px;
+      }
+
+      .itemprice {
+        width: 100%;
+        @apply(--layout-horizontal);
+        @apply(--layout-end);
+        @apply(--layout-center-justified);
+        color: var(--locals-blue);
+      }
+
+      .localcoinamount {
+        width: 15px;
+        height: 15px;
+        margin: 0px 0px 2px 2px;
+      }
+
 
     </style>
     <template is="dom-if" if="{{_is(mode,'home')}}">
@@ -114,8 +149,14 @@ Example:
         <div class="main">
        
          <template is="dom-repeat" items="{{storelist}}">
-     
-          <locals-button class="addbtn" on-object-pressed="choose" object="{{item.type}}"></locals-button>
+          <div class="storeitem">
+            <locals-button class="addbtn" on-object-pressed="choose" object="{{item.type}}"></locals-button>
+            <p class="type">{{item.type}}</p>
+            <div class="itemprice">
+              <p>{{item.price}}</p>
+              <locals-icon class="localcoinamount" verysmall icon="localcoin" iconcolor="blue"></locals-icon>
+            </div>
+          </div>
         </template>
 
          
@@ -158,7 +199,8 @@ Example:
 
         // this shoudl be posted in a Smart Contract
         this.storelist = [{
-          type: 'locals-club'
+          type: 'club',
+          price: '5'
         }];
 
       },
