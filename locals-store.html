@@ -114,7 +114,6 @@ Example:
         <div class="main">
        
          <template is="dom-repeat" items="{{storelist}}">
-     
           <locals-button class="addbtn" on-object-pressed="choose" object="{{item.type}}"></locals-button>
         </template>
 
@@ -158,7 +157,7 @@ Example:
 
         // this shoudl be posted in a Smart Contract
         this.storelist = [{
-          type: 'locals-club'
+          type: 'club'
         }];
 
       },
