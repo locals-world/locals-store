@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../locals-button/locals-button.html">
 <link rel="import" href="../locals-style/locals-style.html">
 <link rel="import" href="../locals-confirm/locals-confirm.html">
-
+<script src="../../bower_components/node-uuid/uuid.js"></script>
 <!--
 An element providing a solution to no problem in particular.
 
@@ -157,6 +157,7 @@ Example:
               <locals-icon class="localcoinamount" verysmall icon="localcoin" iconcolor="blue"></locals-icon>
             </div>
           </div>
+
         </template>
 
          
@@ -194,6 +195,9 @@ Example:
       },
 
       ready: function(){
+
+
+//        console.log(uuid.v4());
         // this.state = 0;
         // this.selection = null;
 
@@ -224,20 +228,22 @@ Example:
       },
 
       confirm: function(){
-        console.log('add ', this.selection, ' to userobject');
+        console.log('add ', this.selectedtype, ' to userobject');
         var lsapi = document.getElementById("lsapi");
         console.log(lsapi.data.collection);
-        lsapi.data.collection['locals-club'] = {
+        
+        lsapi.data.collection[uuid.v4()] = {
             "component": {
-              "name": "locals-club",
+              "name": "locals-" + this.selectedtype,
               "contract": "0x000"
             },
             "data":{
               "name":"Locals Club A2DE4",
               },
             "config":
-              [[2,0]]
-            }
+              [[0,0]]
+            };
+        debugger;
         lsapi.writeData(); 
         this.fire('to-home');
       },
