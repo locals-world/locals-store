@@ -229,6 +229,12 @@ Example:
     </template>
 
     <template is="dom-if" if="{{_is(mode,'detail')}}">
+<locals-objectrender sizeview="{{sizeview}}" path="locals-{{selectedtype}}" key="locals-{{selectedtype}}-new"></locals-objectrender>
+
+
+
+
+
       <div class="total">
 
       <div class="selectedtype">
@@ -251,6 +257,9 @@ Example:
         <div class="whitespace"></div>
       <locals-confirm on-cancel="cancel" on-confirm="confirm"></locals-confirm>
       </div>
+
+
+
     </template>
  
   </template>
