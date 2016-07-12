@@ -74,7 +74,7 @@ Example:
         @apply(--layout-horizontal);
         @apply(--layout-center);
         box-sizing: border-box;
-        padding: 10px 20px 10px 10px;
+        padding: 10px 20px 10px 20px;
         }
 
       .flex {
@@ -85,8 +85,11 @@ Example:
       .main {
         width: 100%;
         box-sizing: border-box;
-        padding: 0px 50px 0px 50px;
+        padding: 0px 5vw 0px 5vw;
         @apply(--layout-horizontal);
+        @apply(--layout-start);
+        @apply(--layout-start-justified);
+
         @apply(--layout-wrap);        
       }
 
@@ -115,16 +118,23 @@ Example:
       }
 
       .storeitem {
-        width: 100%;
+/*        width: 100%;
         max-width: 250px;
-        min-height: 300px;
+        min-height: 300px;*/
         box-sizing: border-box;
-        padding: 15px;
+        padding: 20px;
         @apply(--layout-vertical);
         @apply(--layout-center-center);
       }
 
       .type {
+        font-size: 22px;
+        width: 100%;
+        text-align: center;
+        margin: 10px 0px 5px 0px;
+      }
+
+      .typesmall {
         font-size: 22px;
         width: 100%;
         text-align: center;
@@ -202,44 +212,55 @@ Example:
         }
 
     </style>
+
+  <div class="total">
+    <div class="topbar">
     <template is="dom-if" if="{{_is(mode,'home')}}">
-      <div class="total">
-        <div class="topbar">
-          <p class="flex" on-tap="change"></p>
-          <locals-button class$="{{btnclass}} homebtn" id="exitbtn" icon="plus" on-tap="toHome"></locals-button>
-        </div>
+      <p class="flex" on-tap="change"></p>
+      <locals-button icon="declinenew" on-tap="toHome" small id="exitbtn"></locals-button>
+    </template>
+    <template is="dom-if" if="{{_is(mode,'detail')}}">
+      <locals-button icon="arrowleft" on-tap="cancel" small id="exitbtn"></locals-button>
+      <p class="flex" on-tap="change"></p>
+    </template>
+    </div>
+    <template is="dom-if" if="{{_is(mode,'home')}}">
         <div class="main">
-       
          <template is="dom-repeat" items="{{storelist}}">
           <div class="storeitem">
-            <locals-button class="addbtn" on-object-pressed="choose" object="{{item.type}}" small></locals-button>
+            <template is="dom-if" if="{{_is(sizeview,'phone')}}">
+            <locals-button object$="{{item.type}}" big on-object-pressed="choose"></locals-button>
+            <p class="typesmall">{{item.type}}</p>
+            <div class="itemprice">
+              <p>{{item.price}}</p>
+              <locals-icon class="localcoinamount" veryverysmall icon="localcoin" iconcolor="blue"></locals-icon>
+            </div>
+            </template>
+
+            <template is="dom-if" if="{{!_is(sizeview,'phone')}}">
+            <locals-button object$="{{item.type}}" xl on-object-pressed="choose"></locals-button>
             <p class="type">{{item.type}}</p>
             <div class="itemprice">
               <p>{{item.price}}</p>
-              <locals-icon class="localcoinamount" verysmall icon="localcoin" iconcolor="blue"></locals-icon>
+              <locals-icon class="localcoinamount" veryverysmall icon="localcoin" iconcolor="blue"></locals-icon>
             </div>
+            </template>
+
           </div>
-
         </template>
-
-         
         </div>
-      </div>
-
     </template>
 
     <template is="dom-if" if="{{_is(mode,'detail')}}">
-<locals-objectrender sizeview="{{sizeview}}" path="locals-{{selectedtype}}" key="locals-{{selectedtype}}-new"></locals-objectrender>
+      <locals-objectrender sizeview="{{sizeview}}" path="locals-{{selectedtype}}" key="locals-{{selectedtype}}-new" on-from-detail="cancel"></locals-objectrender>
+    </template>
+  </div>
 
 
-
-
-
-      <div class="total">
+<!--       <div class="total">
 
       <div class="selectedtype">
         <locals-icon icon="{{selectedtype}}" xxl></locals-icon>
-        <locals-objectrender sizeview="{{sizeview}}" key="{{selectedtype}}" renderstate="init"></locals-objectrender>
         <h1>{{selectedtype}}</h1>
        <div class="descr">
         <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec eget vestibulum dolor. In at arcu mollis, semper neque sed, pharetra sem. Praesent ultrices est in velit tempor pulvinar.</p>
@@ -256,11 +277,10 @@ Example:
       <div class="tussenschot"></div>
         <div class="whitespace"></div>
       <locals-confirm on-cancel="cancel" on-confirm="confirm"></locals-confirm>
-      </div>
+      </div> -->
 
 
 
-    </template>
  
   </template>
   <script>
@@ -303,7 +323,7 @@ Example:
 
       choose: function(e) {
         //console.log('add avatar', this.selection);
-        //debugger;
+        // debugger;
         this.selectedtype = e.detail;
       
         this.mode = "detail";
