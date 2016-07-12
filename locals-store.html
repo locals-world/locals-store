@@ -88,7 +88,7 @@ Example:
         padding: 0px 5vw 0px 5vw;
         @apply(--layout-horizontal);
         @apply(--layout-start);
-        @apply(--layout-start-justified);
+        @apply(--layout-center-justified);
 
         @apply(--layout-wrap);        
       }
@@ -138,7 +138,7 @@ Example:
         font-size: 22px;
         width: 100%;
         text-align: center;
-        margin: 0px 0px 5px 0px;
+        margin: 10px 0px 5px 0px;
       }
 
       .itemprice {
@@ -217,10 +217,10 @@ Example:
     <div class="topbar">
     <template is="dom-if" if="{{_is(mode,'home')}}">
       <p class="flex" on-tap="change"></p>
-      <locals-button icon="declinenew" on-tap="toHome" small id="exitbtn"></locals-button>
+      <locals-button bgrgba="0,0,0,0" icon="declinenew" on-tap="toHome" small id="exitbtn"></locals-button>
     </template>
     <template is="dom-if" if="{{_is(mode,'detail')}}">
-      <locals-button icon="arrowleft" on-tap="cancel" small id="exitbtn"></locals-button>
+      <locals-button bgrgba="0,0,0,0" icon="arrowleft" on-tap="cancel" small id="exitbtn"></locals-button>
       <p class="flex" on-tap="change"></p>
     </template>
     </div>
@@ -229,7 +229,7 @@ Example:
          <template is="dom-repeat" items="{{storelist}}">
           <div class="storeitem">
             <template is="dom-if" if="{{_is(sizeview,'phone')}}">
-            <locals-button object$="{{item.type}}" big on-object-pressed="choose"></locals-button>
+            <locals-button object$="{{item.type}}" xl on-object-pressed="choose"></locals-button>
             <p class="typesmall">{{item.type}}</p>
             <div class="itemprice">
               <p>{{item.price}}</p>
