@@ -336,22 +336,22 @@ Example:
 
       confirm: function(){
         console.log('add ', this.selectedtype, ' to userobject');
-        var lsapi = document.getElementById("lsapi");
-        console.log(lsapi.data.collection);
+        // var lsapi = document.getElementById("lsapi");
+        // console.log(lsapi.data.collection);
         
-        lsapi.data.collection[uuid.v4()] = {
-            "component": {
-              "name": "locals-" + this.selectedtype,
-              "contract": "0x000"
-            },
-            "data":{
-              "name":"Locals Club A2DE4",
-              },
-            "config":
-              [[0,0]]
-            };
-        debugger;
-        lsapi.writeData(); 
+        // lsapi.data.collection[uuid.v4()] = {
+        //     "component": {
+        //       "name": "locals-" + this.selectedtype,
+        //       "contract": "0x000"
+        //     },
+        //     "data":{
+        //       "name":"Locals Club A2DE4",
+        //       },
+        //     "config":
+        //       [[0,0]]
+        //     };
+        // debugger;
+        // lsapi.writeData(); 
         this.fire('to-home');
       },
 
